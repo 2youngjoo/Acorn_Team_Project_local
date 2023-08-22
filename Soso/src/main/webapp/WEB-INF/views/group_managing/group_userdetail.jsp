@@ -21,7 +21,7 @@
     <div class="inner-wrapper">
         <div class="user_mate_list">
             <c:forEach items="${mateList}" var="user">
-                <c:if test="${user.isJoin == 0}"> <!-- 가입된 유저만 출력 -->
+                <c:if test="${user.isJoin == 1}"> <!-- 가입된 유저만 출력 -->
                     <div class="user_mate">
                         <div class="user_mate_img">
                             <img src="${pageContext.request.contextPath}${user.profile}" alt="" />
