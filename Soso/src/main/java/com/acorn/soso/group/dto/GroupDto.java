@@ -73,5 +73,6 @@ public class GroupDto {
 	
 	private String type;
 	private String keyword;
+	//소모임 유저 아이디
 	private String user_id;
 }

@@ -1,5 +1,6 @@
 package com.acorn.soso.group_managing.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,4 +29,5 @@ public interface GroupManagingService {
 	public void reject(int num);
 	public void getDetail(ModelAndView mView, int num);
 	public void dropOut(GroupManagingDto dto);
+	public List<GroupManagingDto> getMateList(int num);
 }

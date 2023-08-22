@@ -24,6 +24,8 @@ public interface GroupManagingDao {
 	public List<GroupManagingDto> getApplicantList(int group_num);
 	//소모임 가입 거절 신청자 목록 불러오기
 	public List<GroupManagingDto> getRejectedApplicantList(int group_num);
+	//소모임에 가입한 가입자 리스트 불러오기
+	public List<GroupManagingDto> getMateList(int num);
 	//소모임 가입 승인하기
 	public void joinApprove(int num);
 	//소모임 가입자 수 증가(갱신)하기

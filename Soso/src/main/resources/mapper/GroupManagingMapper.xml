@@ -23,6 +23,14 @@
 	    WHERE group_join_tb.user_id = #{user_id} AND isJoin = 0
    	</select>
    	
+	<select id="getMateList" parameterType="int" resultType="groupManagingDto">
+	    SELECT group_tb.img_path, group_join_tb.user_id, group_join_tb.group_num, users.id
+	    FROM group_tb
+	    JOIN group_join_tb ON group_tb.num = group_join_tb.group_num
+	    JOIN users ON group_join_tb.user_id = users.id
+	    WHERE group_tb.num = #{group_num} AND group_join_tb.isJoin = 0
+	</select>
+   	
    	<select id="getGroupData" parameterType="int" resultType="groupDto">
 		SELECT num, name, caption, img_path, regdate, ended_dt, deadline_dt, start_dt,
 			manager_id, max_people, now_people, avrg_rate, meeting_loc, meeting_time,

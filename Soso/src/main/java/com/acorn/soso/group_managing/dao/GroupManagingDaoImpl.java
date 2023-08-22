@@ -97,5 +97,9 @@ public class GroupManagingDaoImpl implements GroupManagingDao{
 		return session.selectList("groupManaging.getGroupList2", user_id);
 	}
 
+	@Override
+	public List<GroupManagingDto> getMateList(int num) {
+		return session.selectList("groupManaging.getMateList", num);
+	}
 	
 }

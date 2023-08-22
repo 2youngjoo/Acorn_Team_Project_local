@@ -1,5 +1,6 @@
 package com.acorn.soso.group_managing.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,8 @@ public class GroupManagingController {
 	
 	@Autowired
 	private CafeService cafeService;
+	@Autowired
+	private GroupManagingService groupManagingService;
 	
 	@GetMapping("/group_managing/admin_main")
 	public String admin_main(HttpServletRequest request, HttpSession session) {
@@ -52,6 +55,7 @@ public class GroupManagingController {
 		return "group_managing/joinApprove";
 	}
 	
+	// 소모임 관리 유저 main 페이지
 	@GetMapping("/group_managing/user_main")
 	public String user_main(HttpServletRequest request, HttpSession session) {
 		String user_id = (String)session.getAttribute("id");
@@ -106,11 +110,23 @@ public class GroupManagingController {
 		
 	}
 	
+	// 소모임 관리 detail 페이지( 로그인된 user가 가입된 리스트에 관한 )
+	// 해당 소모임에 가입된 user 리스트 불러오기
 	@GetMapping("/group_managing/group_userdetail")
-	public ModelAndView detail(ModelAndView mView, int num, HttpServletRequest request, Model model) {
+	public ModelAndView detail(ModelAndView mView, int num, GroupDto dto, HttpSession session, HttpServletRequest request, Model model) {
 	    service.getDetail(mView, num);
+	    String user_id = (String)session.getAttribute("id");
+		dto.setUser_id(user_id);
 	    mView.setViewName("group_managing/group_userdetail");
 	    cafeService.getList(request, model, num);
+        // 가입된 유저 리스트 가져와서 모델에 추가
+	    int group_num = num;
+        List<GroupManagingDto> mateList = groupManagingService.getMateList(group_num);
+        // 각 사용자의 프로필 이미지 경로를 profile 속성으로 설정
+        for (GroupManagingDto user : mateList) {
+            user.setProfile("users/info");
+        }
+        request.setAttribute("mateList", mateList);
 	    request.setAttribute("num", num);
 	    return mView;
 	}
@@ -170,6 +186,7 @@ public class GroupManagingController {
 		return "redirect:/group_managing/applicantList?group_num=" + group_num;
 	}
 	
+	// 로그인된 user가 가입한 모임에서 탈퇴하기
 	@GetMapping("/group_managing/group_userdropOut") 
 	public String dropOut(GroupManagingDto dto, HttpSession session) {  
 		String user_id = (String)session.getAttribute("id");
@@ -177,4 +194,5 @@ public class GroupManagingController {
 		service.dropOut(dto);
 		return "redirect:/group_managing/user_main";
 	}
+	
 }
